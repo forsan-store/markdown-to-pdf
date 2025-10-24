@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملخص الميكانيكا - الشعبة 5</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 800;
+            margin-bottom: 10px;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header h2 {
+            font-size: 1.4em;
+            font-weight: 300;
+            opacity: 0.9;
+            position: relative;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border-right: 5px solid #3498db;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .section-title {
+            color: #2c3e50;
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ecf0f1;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: 0;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, #3498db, #9b59b6);
+        }
+        
+        .law-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px;
+            margin: 15px 0;
+            border-radius: 12px;
+            border-right: 4px solid #e74c3c;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .law-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #e74c3c, #c0392b);
+        }
+        
+        .law-title {
+            color: #2c3e50;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .law-title::before {
+            content: '⚡';
+            margin-left: 10px;
+            font-size: 1.2em;
+        }
+        
+        .law-content {
+            color: #5a6c7d;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        
+        .equation {
+            text-align: center;
+            font-size: 1.4em;
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            border-radius: 10px;
+            direction: ltr;
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+            box-shadow: 0 5px 15px rgba(116, 185, 255, 0.3);
+        }
+        
+        .symbols-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .symbol-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #dfe6e9;
+            transition: all 0.3s ease;
+        }
+        
+        .symbol-item:hover {
+            border-color: #3498db;
+            transform: scale(1.05);
+        }
+        
+        .symbol {
+            font-weight: 700;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+        
+        .meaning {
+            color: #636e72;
+            margin: 5px 0;
+        }
+        
+        .unit {
+            color: #e74c3c;
+            font-weight: 500;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 25px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 15px;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ecf0f1;
+            text-align: center;
+        }
+        
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        tr:hover {
+            background: #e3f2fd;
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            font-size: 1.3em;
+            font-weight: 700;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            margin-top: 10px;
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        /* قسم مركز الكتلة */
+        .center-of-mass {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        /* قسم قانون الجذب */
+        .gravity-law {
+            background: linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .equation {
+                font-size: 1.1em;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ملخص الميكانيكا</h1>
+            <h2>الشعبة 5 - الفصل الدراسي الأول</h2>
+        </div>
+        
+        <div class="content">
+            <!-- القوانين الأساسية للحركة -->
+            <div class="section">
+                <h2 class="section-title">القوانين الأساسية للحركة</h2>
+                
+                <div class="law-card">
+                    <div class="law-title">قانون نيوتن الأول</div>
+                    <div class="law-content">
+                        يبقى الجسم في حالة سكون أو حركة منتظمة في خط مستقيم ما لم تؤثر عليه قوة محصلة
+                    </div>
+                </div>
+                
+                <div class="law-card">
+                    <div class="law-title">قانون نيوتن الثاني</div>
+                    <div class="law-content">
+                        <div class="equation">F = m × a</div>
+                        القوة تساوي كتلة الجسم مضروبة في تسارعه
+                    </div>
+                </div>
+                
+                <div class="law-card">
+                    <div class="law-title">قانون نيوتن الثالث</div>
+                    <div class="law-content">
+                        لكل فعل رد فعل مساوٍ في المقدار ومعاكس في الاتجاه
+                    </div>
+                </div>
+            </div>
+            
+            <!-- معادلات الحركة -->
+            <div class="section">
+                <h2 class="section-title">معادلات الحركة</h2>
+                
+                <div class="equation">v = v₀ + at</div>
+                <div class="equation">d = v₀t + ½at²</div>
+                <div class="equation">v² = v₀² + 2ad</div>
+                
+                <div class="symbols-grid">
+                    <div class="symbol-item">
+                        <div class="symbol">v</div>
+                        <div class="meaning">السرعة النهائية</div>
+                        <div class="unit">m/s</div>
+                    </div>
+                    <div class="symbol-item">
+                        <div class="symbol">v₀</div>
+                        <div class="meaning">السرعة الابتدائية</div>
+                        <div class="unit">m/s</div>
+                    </div>
+                    <div class="symbol-item">
+                        <div class="symbol">a</div>
+                        <div class="meaning">التسارع</div>
+                        <div class="unit">m/s²</div>
+                    </div>
+                    <div class="symbol-item">
+                        <div class="symbol">t</div>
+                        <div class="meaning">الزمن</div>
+                        <div class="unit">s</div>
+                    </div>
+                    <div class="symbol-item">
+                        <div class="symbol">d</div>
+                        <div class="meaning">المسافة</div>
+                        <div class="unit">m</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- مركز الكتلة والتوازن -->
+            <div class="section">
+                <h2 class="section-title">مركز الكتلة والتوازن</h2>
+                
+                <div class="center-of-mass">
+                    <div class="law-title">تعريف مركز الكتلة</div>
+                    <div class="law-content">
+                        النقطة التي تتحرك بنفس حركة الجسم ككل - مركز توزيع الكتلة في الجسم
+                    </div>
+                </div>
+
+                <div class="law-card">
+                    <div class="law-title">شروط التوازن</div>
+                    <div class="law-content">
+                        <div class="equation">ΣF = 0</div>
+                        <div class="equation">Στ = 0</div>
+                        محصلة القوى = صفر ، محصلة العزوم = صفر
+                    </div>
+                </div>
+            </div>
+
+            <!-- قانون الجذب العام -->
+            <div class="section">
+                <h2 class="section-title">قانون الجذب العام</h2>
+                
+                <div class="gravity-law">
+                    <div class="equation">F = G(m₁m₂/r²)</div>
+                    
+                    <div class="symbols-grid">
+                        <div class="symbol-item">
+                            <div class="symbol">F</div>
+                            <div class="meaning">قوة الجذب</div>
+                            <div class="unit">N</div>
+                        </div>
+                        <div class="symbol-item">
+                            <div class="symbol">G</div>
+                            <div class="meaning">ثابت الجذب العام</div>
+                            <div class="unit">N⋅m²/kg²</div>
+                        </div>
+                        <div class="symbol-item">
+                            <div class="symbol">m₁, m₂</div>
+                            <div class="meaning">الكتلتان</div>
+                            <div class="unit">kg</div>
+                        </div>
+                        <div class="symbol-item">
+                            <div class="symbol">r</div>
+                            <div class="meaning">المسافة بين المراكز</div>
+                            <div class="unit">m</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- أنواع القوى -->
+            <div class="section">
+                <h2 class="section-title">أنواع القوى</h2>
+                
+                <div class="symbols-grid">
+                    <div class="symbol-item">
+                        <div class="symbol">W = mg</div>
+                        <div class="meaning">قوة الوزن</div>
+                    </div>
+                    <div class="symbol-item">
+                        <div class="symbol">f = μN</div>
+                        <div class="meaning">قوة الاحتكاك</div>
+                    </div>
+                    <div class="symbol-item">
+                        <div class="symbol">T</div>
+                        <div class="meaning">قوة الشد</div>
+                    </div>
+                    <div class="symbol-item">
+                        <div class="symbol">N</div>
+                        <div class="meaning">القوة العمودية</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- جداول الملخص -->
+            <div class="section">
+                <h2 class="section-title">جداول الملخص</h2>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>القانون</th>
+                                <th>الصيغة</th>
+                                <th>الوحدة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>قانون نيوتن الثاني</td>
+                                <td>F = ma</td>
+                                <td>N</td>
+                            </tr>
+                            <tr>
+                                <td>قانون الجذب العام</td>
+                                <td>F = G(m₁m₂/r²)</td>
+                                <td>N</td>
+                            </tr>
+                            <tr>
+                                <td>السرعة</td>
+                                <td>v = Δd/Δt</td>
+                                <td>m/s</td>
+                            </tr>
+                            <tr>
+                                <td>التسارع</td>
+                                <td>a = Δv/Δt</td>
+                                <td>m/s²</td>
+                            </tr>
+                            <tr>
+                                <td>الوزن</td>
+                                <td>W = mg</td>
+                                <td>N</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            الشعبة 5
+            <div class="badge">ملخص الميكانيكا</div>
+        </div>
+    </div>
+</body>
+</html>
